@@ -1,0 +1,26 @@
+# Environment files
+.env
+.env.local
+
+# Session/Cookie files
+cookies.json
+session.json
+*.cookies
+
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+.venv/
+venv/
+env/
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Logs
+*.log
+logs/

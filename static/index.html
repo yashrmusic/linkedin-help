@@ -1,0 +1,831 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Elite | Automation Intelligence</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap"
+        rel="stylesheet">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        :root {
+            --bg-base: #020617;
+            --bg-card: rgba(15, 23, 42, 0.6);
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --accent-primary: #3b82f6;
+            --accent-secondary: #8b5cf6;
+            --accent-success: #10b981;
+            --accent-warning: #f59e0b;
+            --accent-error: #ef4444;
+            --text-primary: #f8fafc;
+            --text-secondary: #94a3b8;
+            --text-muted: #64748b;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            outline: none;
+        }
+
+        body {
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background-color: var(--bg-base);
+            color: var(--text-primary);
+            min-height: 100vh;
+            overflow: hidden;
+            display: flex;
+        }
+
+        /* Abstract Background Elements */
+        .glass-blob {
+            position: fixed;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(59, 130, 246, 0.15) 0%, transparent 70%);
+            z-index: -1;
+            filter: blur(80px);
+            animation: animateBlob 20s infinite alternate;
+        }
+
+        @keyframes animateBlob {
+            0% {
+                transform: translate(-10%, -10%) scale(1);
+            }
+
+            100% {
+                transform: translate(10%, 10%) scale(1.1);
+            }
+        }
+
+        /* Sidebar Styling */
+        aside {
+            width: 280px;
+            border-right: 1px solid var(--border-glass);
+            background: rgba(2, 6, 23, 0.8);
+            backdrop-filter: blur(20px);
+            display: flex;
+            flex-direction: column;
+            padding: 2rem 1.5rem;
+            z-index: 10;
+        }
+
+        .brand {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            margin-bottom: 3rem;
+        }
+
+        .brand-logo {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border-radius: 8px;
+            display: grid;
+            place-items: center;
+        }
+
+        .brand-name {
+            font-weight: 700;
+            font-size: 1.25rem;
+            letter-spacing: -0.02em;
+            background: linear-gradient(to right, #fff, #94a3b8);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .nav-section {
+            margin-bottom: 2rem;
+        }
+
+        .nav-label {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            color: var(--text-muted);
+            letter-spacing: 0.05em;
+            margin-bottom: 1rem;
+            padding-left: 0.5rem;
+        }
+
+        .company-item {
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.75rem 1rem;
+            border-radius: 12px;
+            color: var(--text-secondary);
+            cursor: pointer;
+            transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+            margin-bottom: 0.5rem;
+        }
+
+        .company-item:hover,
+        .company-item.active {
+            background: var(--glass-bg);
+            color: var(--text-primary);
+        }
+
+        .company-item.active {
+            background: rgba(59, 130, 246, 0.1);
+            color: var(--accent-primary);
+        }
+
+        /* Main Content Styling */
+        main {
+            flex: 1;
+            padding: 2.5rem;
+            overflow-y: auto;
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 2rem;
+        }
+
+        .dashboard-header {
+            grid-column: 1 / -1;
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 1rem;
+        }
+
+        .header-title h2 {
+            font-size: 2rem;
+            font-weight: 700;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.25rem;
+        }
+
+        .header-title p {
+            color: var(--text-secondary);
+            font-size: 0.95rem;
+        }
+
+        .system-status {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 500;
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            background: rgba(16, 185, 129, 0.1);
+            color: var(--accent-success);
+            border: 1px solid rgba(16, 185, 129, 0.2);
+        }
+
+        .status-pulse {
+            width: 8px;
+            height: 8px;
+            background: var(--accent-success);
+            border-radius: 50%;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.7);
+            }
+
+            70% {
+                transform: scale(1);
+                box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+            }
+
+            100% {
+                transform: scale(0.95);
+                box-shadow: 0 0 0 0 rgba(16, 185, 129, 0);
+            }
+        }
+
+        /* Account Cards */
+        .cards-container {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(360px, 1fr));
+            gap: 1.5rem;
+            align-content: start;
+        }
+
+        .account-card {
+            background: var(--bg-card);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            padding: 1.75rem;
+            backdrop-filter: blur(12px);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .account-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 4px;
+            background: linear-gradient(to right, var(--accent-primary), var(--accent-secondary));
+            opacity: 0.4;
+        }
+
+        .account-card:hover {
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.2);
+        }
+
+        .account-info {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 2rem;
+        }
+
+        .email-display {
+            font-weight: 600;
+            font-size: 1.1rem;
+            color: var(--text-primary);
+        }
+
+        .account-badge {
+            font-size: 0.75rem;
+            font-weight: 700;
+            padding: 0.25rem 0.6rem;
+            border-radius: 6px;
+            background: rgba(255, 255, 255, 0.05);
+            color: var(--text-secondary);
+        }
+
+        .action-grid {
+            display: flex;
+            flex-direction: column;
+            gap: 0.75rem;
+        }
+
+        .btn-action {
+            width: 100%;
+            padding: 0.85rem 1.25rem;
+            border-radius: 14px;
+            border: 1px solid var(--border-glass);
+            background: rgba(255, 255, 255, 0.03);
+            color: var(--text-primary);
+            font-weight: 600;
+            font-size: 0.95rem;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            transition: all 0.2s;
+        }
+
+        .btn-action i {
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+
+        .btn-action:hover {
+            background: rgba(255, 255, 255, 0.08);
+            border-color: var(--accent-primary);
+        }
+
+        .btn-action.primary {
+            background: linear-gradient(135deg, var(--accent-primary), var(--accent-secondary));
+            border: none;
+            color: white;
+            box-shadow: 0 4px 12px rgba(59, 130, 246, 0.3);
+        }
+
+        .btn-action.primary:hover {
+            filter: brightness(1.1);
+            transform: scale(1.02);
+        }
+
+        .btn-action:active {
+            transform: scale(0.98);
+        }
+
+        /* Console styling */
+        .console-container {
+            background: rgba(2, 6, 23, 0.95);
+            border: 1px solid var(--border-glass);
+            border-radius: 20px;
+            display: flex;
+            flex-direction: column;
+            max-height: calc(100vh - 5rem);
+            /* Constraint height to viewport */
+            height: auto;
+            min-height: 400px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            position: sticky;
+            top: 0;
+            overflow: hidden;
+            /* Ensure container respects border radius and layout */
+        }
+
+        .console-header {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid var(--border-glass);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .console-tab {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--accent-primary);
+        }
+
+        .console-controls {
+            display: flex;
+            gap: 0.5rem;
+        }
+
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--border-glass);
+        }
+
+        .console-body {
+            flex: 1;
+            padding: 1.5rem;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 0.85rem;
+            overflow-y: auto;
+            background: #010409;
+            color: #d0d7de;
+        }
+
+        .log-line {
+            padding: 0.2rem 0;
+            display: flex;
+            gap: 1rem;
+            border-left: 2px solid transparent;
+            padding-left: 0.75rem;
+            margin-bottom: 0.25rem;
+        }
+
+        .log-time {
+            color: var(--text-muted);
+            min-width: 65px;
+        }
+
+        .log-msg {
+            flex: 1;
+        }
+
+        .log-line.success {
+            border-left-color: var(--accent-success);
+            color: #aff5b4;
+        }
+
+        .log-line.error {
+            border-left-color: var(--accent-error);
+            color: #ffa198;
+        }
+
+        .log-line.warning {
+            border-left-color: var(--accent-warning);
+            color: #f2cc60;
+        }
+
+        .log-line.info {
+            border-left-color: var(--accent-primary);
+        }
+
+        /* Scrollbar customization */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 10px;
+        }
+
+        ::-webkit-scrollbar-thumb:hover {
+            background: rgba(255, 255, 255, 0.2);
+        }
+
+        .loader {
+            display: none;
+            width: 16px;
+            height: 16px;
+            border: 2px solid rgba(255, 255, 255, 0.3);
+            border-top-color: #fff;
+            border-radius: 50%;
+            animation: spin 0.8s linear infinite;
+        }
+
+        @keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+
+        .btn-action.loading .loader {
+            display: block;
+        }
+
+        .btn-action.loading i {
+            display: none;
+        }
+
+        /* Warning/Stop Button */
+        .btn-action.warning {
+            background: rgba(239, 68, 68, 0.1);
+            color: var(--accent-error);
+            border-color: rgba(239, 68, 68, 0.3);
+            justify-content: center;
+        }
+
+        .btn-action.warning:hover {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--accent-error);
+        }
+
+        .toggle-container {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            cursor: pointer;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 0.5rem 1rem;
+            border-radius: 9999px;
+            border: 1px solid var(--border-glass);
+            transition: all 0.3s;
+        }
+
+        .toggle-container:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .toggle-slider {
+            width: 32px;
+            height: 18px;
+            background: rgba(255, 255, 255, 0.2);
+            border-radius: 18px;
+            position: relative;
+            transition: 0.3s;
+        }
+
+        .toggle-slider::before {
+            content: '';
+            position: absolute;
+            width: 14px;
+            height: 14px;
+            border-radius: 50%;
+            background: white;
+            top: 2px;
+            left: 2px;
+            transition: 0.3s;
+        }
+
+        #headless-toggle {
+            display: none;
+        }
+
+        #headless-toggle:checked+.toggle-slider {
+            background: var(--accent-success);
+        }
+
+        #headless-toggle:checked+.toggle-slider::before {
+            transform: translateX(14px);
+        }
+
+        .toggle-text {
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        #headless-toggle:checked~.toggle-text {
+            color: var(--text-primary);
+        }
+    </style>
+</head>
+
+<body>
+    <div class="glass-blob"></div>
+
+    <aside>
+        <div class="brand">
+            <div class="brand-logo">
+                <i data-lucide="shield-check" color="white" size="20"></i>
+            </div>
+            <span class="brand-name">LINKEDIN ELITE</span>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Intelligence</div>
+            <div class="company-item active">
+                <i data-lucide="layout-dashboard" size="18"></i>
+                Dashboard
+            </div>
+            <div class="company-item">
+                <i data-lucide="bar-chart-3" size="18"></i>
+                Analytics
+            </div>
+            <div class="company-item">
+                <i data-lucide="settings" size="18"></i>
+                Configuration
+            </div>
+        </div>
+
+        <div class="nav-section">
+            <div class="nav-label">Target Companies</div>
+            <div id="sidebar-companies">
+                <!-- Populated via JS -->
+            </div>
+        </div>
+    </aside>
+
+    <main>
+        <div class="dashboard-header">
+            <div class="header-title">
+                <h2 id="current-company">Intelligent Automation</h2>
+                <p>Monitor and execute recruitment intelligence at scale.</p>
+            </div>
+            <div style="display: flex; gap: 1rem; align-items: center;">
+                <label class="toggle-container">
+                    <input type="checkbox" id="headless-toggle">
+                    <span class="toggle-slider"></span>
+                    <span class="toggle-text">Headless Mode</span>
+                </label>
+                <div class="system-status">
+                    <div class="status-pulse"></div>
+                    SYSTEMS OPERATIONAL
+                </div>
+            </div>
+        </div>
+
+        <div class="cards-container" id="cards-container">
+            <!-- Populated via JS -->
+        </div>
+
+        <div class="console-container">
+            <div class="console-header">
+                <div>
+                    <div class="console-tab">
+                        <i data-lucide="terminal" size="16"></i>
+                        REAL-TIME EXECUTION LOG
+                    </div>
+                    <div id="last-run-stats"
+                        style="font-size: 0.75rem; color: var(--text-secondary); margin-top: 4px; display: none;">
+                        Last Run: <span id="stat-detected" style="color: var(--text-primary);">0</span> Detected | <span
+                            id="stat-contacted" style="color: var(--accent-success);">0</span> Contacted
+                    </div>
+                </div>
+                <div class="console-controls" style="display: flex; align-items: center; gap: 1rem;">
+                    <button id="btn-stop" class="btn-action warning"
+                        style="padding: 0.4rem 0.8rem; font-size: 0.8rem; display: none;" onclick="stopOperation()">
+                        <i data-lucide="octagon"
+                            style="width: 14px; height: 14px; margin-right: 6px; color: inherit;"></i>
+                        End Operation
+                    </button>
+                    <div style="display: flex; gap: 0.5rem;">
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                        <div class="dot"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="console-body" id="console-body">
+                <div class="log-line">
+                    <span class="log-time">System</span>
+                    <span class="log-msg">Initialization complete. Awaiting user command...</span>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        let config = null;
+        let activeAccount = null;
+        let pollingInterval = null;
+
+        async function init() {
+            try {
+                const res = await fetch('/api/config');
+                config = await res.json();
+                lucide.createIcons();
+                renderSidebar();
+                renderAccounts(config.companies[0].name);
+            } catch (err) {
+                console.error("Init failed", err);
+            }
+        }
+
+        function renderSidebar() {
+            const container = document.getElementById('sidebar-companies');
+            container.innerHTML = '';
+            config.companies.forEach((company, idx) => {
+                const div = document.createElement('div');
+                div.className = `company-item ${idx === 0 ? 'active' : ''}`;
+                div.innerHTML = `
+                    <i data-lucide="building-2" size="18"></i>
+                    ${company.name}
+                `;
+                div.onclick = () => {
+                    document.querySelectorAll('.company-item').forEach(el => el.classList.remove('active'));
+                    div.classList.add('active');
+                    renderAccounts(company.name);
+                };
+                container.appendChild(div);
+            });
+            lucide.createIcons();
+        }
+
+        function renderAccounts(companyName) {
+            document.getElementById('current-company').innerText = companyName;
+            const company = config.companies.find(c => c.name === companyName);
+            const container = document.getElementById('cards-container');
+            container.innerHTML = '';
+
+            company.accounts.forEach(acc => {
+                const card = document.createElement('div');
+                card.className = 'account-card';
+                const statusText = acc.has_session ? 'ACTIVE SESSION' : 'NO SESSION';
+                const statusClass = acc.has_session ? '' : 'style="background: rgba(239, 68, 68, 0.1); color: var(--accent-error);"';
+
+                card.innerHTML = `
+                    <div class="account-info">
+                        <div class="email-display">${acc.email}</div>
+                        <div class="account-badge" ${statusClass}>${statusText}</div>
+                    </div>
+                    <div class="action-grid">
+                        <button class="btn-action primary" onclick="execute('${acc.email}', 'invite_applicants', this)">
+                            <span>Invite Applicants</span>
+                            <i data-lucide="user-plus"></i>
+                            <div class="loader"></div>
+                        </button>
+                        <button class="btn-action" onclick="execute('${acc.email}', 'post_job', this)">
+                            <span>Draft Job Post</span>
+                            <i data-lucide="file-text"></i>
+                            <div class="loader"></div>
+                        </button>
+                        <button class="btn-action" onclick="execute('${acc.email}', 'close_dead_jobs', this)">
+                            <span>Audit & Close Jobs</span>
+                            <i data-lucide="archive"></i>
+                            <div class="loader"></div>
+                        </button>
+                    </div>
+                `;
+                container.appendChild(card);
+            });
+            lucide.createIcons();
+        }
+
+        async function execute(email, action, btn) {
+            if (activeAccount && activeAccount !== email) {
+                if (!confirm("A job is already running for another account. Switch logs??")) return;
+            }
+
+            btn.classList.add('loading');
+            document.querySelectorAll('.btn-action').forEach(b => b.disabled = true);
+
+            // Show Stop Button
+            const stopBtn = document.getElementById('btn-stop');
+            stopBtn.style.display = 'flex';
+            lucide.createIcons();
+
+            const headless = document.getElementById('headless-toggle').checked;
+
+            try {
+                const res = await fetch('/api/run', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email, action, headless })
+                });
+
+                if (res.ok) {
+                    activeAccount = email;
+                    startLogPolling(email);
+                    addLogLine('System', `Initiated ${action} for ${email}...`, 'info');
+                } else {
+                    const data = await res.json();
+                    addLogLine('Error', data.message || 'Execution failed', 'error');
+                }
+            } catch (err) {
+                addLogLine('System', 'Network error occurred.', 'error');
+            } finally {
+                setTimeout(() => {
+                    btn.classList.remove('loading');
+                    document.querySelectorAll('.btn-action').forEach(b => b.disabled = false);
+                }, 2000);
+            }
+        }
+
+        function startLogPolling(email) {
+            if (pollingInterval) clearInterval(pollingInterval);
+            pollingInterval = setInterval(async () => {
+                try {
+                    const res = await fetch(`/api/logs/${email}`);
+                    const data = await res.json();
+                    refreshConsole(data.logs);
+                } catch (err) {
+                    console.error("Polling error", err);
+                }
+            }, 1000);
+        }
+
+        function refreshConsole(logs) {
+            const body = document.getElementById('console-body');
+            body.innerHTML = logs.map(line => {
+                let type = 'info';
+                if (line.includes('✅') || line.includes('SUCCESS')) type = 'success';
+                if (line.includes('❌') || line.includes('Error')) type = 'error';
+                if (line.includes('⚠️')) type = 'warning';
+
+                // Parse Summary
+                if (line.includes("Summary: {")) {
+                    try {
+                        // Very basic extraction, might want robust JSON parsing if possible
+                        // Python dict string to JSON approximation
+                        const content = line.split("Summary: ")[1].replace(/'/g, '"').replace(/None/g, 'null').replace(/False/g, 'false').replace(/True/g, 'true');
+                        const stats = JSON.parse(content);
+
+                        document.getElementById('last-run-stats').style.display = 'block';
+                        document.getElementById('stat-detected').innerText = stats.found || 0;
+                        document.getElementById('stat-contacted').innerText = stats.sent || 0;
+                    } catch (e) { console.error("Failed to parse summary", e); }
+                }
+
+                const time = new Date().toLocaleTimeString([], { hour12: false });
+                return `
+                    <div class="log-line ${type}">
+                        <span class="log-time">${time}</span>
+                        <span class="log-msg">${line}</span>
+                    </div>
+                `;
+            }).join('');
+            body.scrollTop = body.scrollHeight;
+        }
+
+        function addLogLine(label, msg, type) {
+            const body = document.getElementById('console-body');
+            const time = new Date().toLocaleTimeString([], { hour12: false });
+            body.innerHTML += `
+                <div class="log-line ${type}">
+                    <span class="log-time">${time}</span>
+                    <span class="log-msg">[${label}] ${msg}</span>
+                </div>
+            `;
+            body.scrollTop = body.scrollHeight;
+        }
+
+        async function stopOperation() {
+            if (!activeAccount) return;
+            const stopBtn = document.getElementById('btn-stop');
+            stopBtn.disabled = true;
+            stopBtn.innerHTML = 'Thinking...';
+
+            try {
+                const res = await fetch('/api/stop', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email: activeAccount })
+                });
+                const data = await res.json();
+                addLogLine('System', `Stop requested: ${data.status}`, 'warning');
+            } catch (err) {
+                console.error(err);
+                addLogLine('Error', 'Failed to send stop command', 'error');
+            }
+
+            // Reset UI
+            setTimeout(() => {
+                stopBtn.style.display = 'none';
+                stopBtn.disabled = false;
+                stopBtn.innerHTML = '<i data-lucide="octagon" style="width: 14px; height: 14px; margin-right: 6px; color: inherit;"></i> End Operation';
+
+                document.querySelectorAll('.btn-action').forEach(b => {
+                    b.disabled = false;
+                    b.classList.remove('loading');
+                });
+                activeAccount = null;
+                lucide.createIcons();
+            }, 1000);
+        }
+
+        init();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,47 @@
+companies:
+  - name: "Deco Arte"
+    templates:
+      invite_applicants: |
+        Thank you for showing interest in joining Deco Arte. We've received your application through LinkedIn and would love to learn more about your background.
+
+        Please email your updated resume (and portfolio, if applicable) to jobs@deco-arte.in so we can review your profile in detail and take your application forward.
+
+        Looking forward to hearing from you.
+
+        Warm regards,
+        Team Deco Arte
+    accounts:
+      - email: "jobs@deco-arte.in"
+        password: "Yr19950903!"
+
+  - name: "Urban Mistrii"
+    templates:
+      invite_applicants: |
+        Thank you for showing interest in joining Urban Mistrii. We've received your application through LinkedIn and would love to learn more about your background.
+
+        Please email your updated resume (and portfolio, if applicable) to mail@urbanmistrii.com so we can review your profile in detail and take your application forward.
+
+        Looking forward to hearing from you.
+
+        Warm regards,
+        Team Urban Mistrii
+    accounts:
+      - email: "mail@urbanmistrii.com"
+        password: "Lolokok1"
+      - email: "yashr.otp@gmail.com"
+        password: "Lolokok1"
+
+  - name: "Melange Studio"
+    templates:
+      invite_applicants: |
+        Thank you for showing interest in joining Melange Studio. We've received your application through LinkedIn and would love to learn more about your background.
+
+        Please email your updated resume (and portfolio, if applicable) to dhruv5795@gmail.com so we can review your profile in detail and take your application forward.
+
+        Looking forward to hearing from you.
+
+        Warm regards,
+        Team Melange Studio
+    accounts:
+      - email: "dhruv5795@gmail.com"
+        password: "dvgaddu1995"

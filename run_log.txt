@@ -1,0 +1,30 @@
+=== LinkedIn Automated Hiring Run: 2026-01-22 16:43:22 ===
+[16:43:22] ============================================================
+[16:43:22] 🚀 DECO ARTE - LINKEDIN APPLICANT MESSENGER (OPTIMIZED)
+[16:43:22] ============================================================
+[16:43:25] 🔐 Starting login...
+[16:43:25]    Trying saved session...
+[16:43:37] ✅ Logged in via cookies!
+[16:43:37] 📋 Navigating to: https://www.linkedin.com/my-items/posted-jobs/
+[16:43:47]    Opening job post details...
+[16:43:59] ✅ Opened job post
+[16:43:59] 👥 Opening applicants...
+[16:44:02] ✅ Viewing applicants
+[16:44:02] 🔍 Searching for applicants on page...
+[16:44:04] 📊 Found 2 potential candidates with message buttons
+[16:44:04] 📨 Processing fresh applicants...
+[16:44:04] --- Applicant 1/2 ---
+[16:44:05]    ✅ Message sent successfully
+[16:44:10] --- Applicant 2/2 ---
+[16:44:11]    ✅ Message sent successfully
+[16:44:17] 
+============================================================
+[16:44:17] 🏁 SESSION COMPLETE
+[16:44:17] ============================================================
+[16:44:17] 📊 SUMMARY:
+[16:44:17]    - Candidate(s) Found : 2
+[16:44:17]    - Message(s) Sent    : 2
+[16:44:17]    - Job Post           : Unknown
+[16:44:17]    - Login Status       : SUCCESS (Cookies)
+[16:44:17] ============================================================
+[16:44:17] ✅ System shutting down. Check run_log.txt for details.
