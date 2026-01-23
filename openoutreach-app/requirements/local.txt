@@ -1,0 +1,6 @@
+-r base.txt
+
+# Testing
+pytest
+pytest-mock
+factory-boy

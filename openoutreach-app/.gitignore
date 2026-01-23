@@ -1,0 +1,12 @@
+__pycache__/
+.idea/
+.venv/
+.pytest_cache/
+.vscode
+.dockerignore
+.env
+
+/linkedin_state.json
+assets/accounts.secrets.yaml
+assets/cookies/
+assets/data/
