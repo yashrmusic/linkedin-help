@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Offer Letter Automation</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .admin-view {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .dashboard-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        .form-card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .status-card {
+            background: #f8f9fa;
+            padding: 25px;
+            border-radius: 12px;
+            border: 1px solid #dee2e6;
+        }
+
+        .form-row {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+
+        .form-row .form-group {
+            flex: 1;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .form-group input,
+        .form-group select,
+        .form-group textarea {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            font-size: 14px;
+        }
+
+        .actions {
+            margin-top: 20px;
+            display: flex;
+            gap: 10px;
+        }
+
+        .log-container {
+            height: 300px;
+            overflow-y: auto;
+            background: #1e1e1e;
+            color: #d4d4d4;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+        }
+
+        .log-entry {
+            margin-bottom: 5px;
+        }
+
+        .log-success {
+            color: #4ec9b0;
+        }
+
+        .log-error {
+            color: #f44747;
+        }
+
+        .log-info {
+            color: #569cd6;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="admin-view">
+        <div class="header">
+            <h1>🚀 Offer Letter Dashboard</h1>
+            <p class="subtitle">Generate and send offer letters without opening the IDE</p>
+        </div>
+
+        <!-- AI Smart Fill Section -->
+        <div class="form-card" style="margin-bottom: 25px; border-left: 5px solid #569cd6;">
+            <h2>✨ AI Smart Fill</h2>
+            <p class="subtitle">Paste candidate details or a summary here (e.g. from LinkedIn or Email)</p>
+            <div class="form-group">
+                <textarea id="aiPrompt" rows="4"
+                    placeholder="e.g. Anas is joining as Architecture Intern from 5th Jan at 50k salary. His email is anas@example.com..."></textarea>
+            </div>
+            <div class="actions">
+                <button type="button" id="btnAiFill" class="btn btn-outline"
+                    style="border-color: #569cd6; color: #569cd6;">
+                    <span class="icon">🤖</span> AI Smart Fill Form
+                </button>
+            </div>
+        </div>
+
+        <div class="dashboard-grid">
+            <div class="form-card">
+                <h2>👤 Candidate Information</h2>
+                <form id="offerForm">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="profile">Company Profile</label>
+                            <select id="profile" required>
+                                <option value="">Select Profile...</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="name">Candidate Full Name</label>
+                        <input type="text" id="name" placeholder="e.g. John Doe" required>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="email">Email Address</label>
+                            <input type="email" id="email" placeholder="john@example.com" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="phone">Phone Number</label>
+                            <input type="tel" id="phone" placeholder="8219847663">
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="position">Job Title / Position</label>
+                            <input type="text" id="position" placeholder="Architecture Intern" required>
+                        </div>
+                    </div>
+
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="start_date">Joining Date</label>
+                            <input type="text" id="start_date" placeholder="5 January, 2026" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="salary">Monthly Salary</label>
+                            <input type="text" id="salary" placeholder="10000" required>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="test_date">Interview Date</label>
+                        <input type="text" id="test_date" placeholder="18 December, 2025" required>
+                    </div>
+
+                    <div class="actions">
+                        <button type="button" id="btnGenerate" class="btn btn-primary">
+                            <span class="icon">📝</span> Generate PDF
+                        </button>
+                        <button type="button" id="btnSend" class="btn btn-secondary" disabled>
+                            <span class="icon">📤</span> Send Email
+                        </button>
+                    </div>
+                </form>
+            </div>
+
+            <div class="status-card">
+                <h2>📊 Execution Logs</h2>
+                <div id="logContainer" class="log-container">
+                    <div class="log-entry log-info">Ready to process offer letters...</div>
+                </div>
+
+                <div id="resultLinks" style="margin-top: 20px; display: none;">
+                    <h3>📂 Outputs</h3>
+                    <div id="pdfLinkContainer"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="admin.js"></script>
+</body>
+
+</html>

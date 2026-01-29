@@ -1,162 +1,73 @@
-# LinkedIn Free Job Applicant Messenger
+# Job Automation Hub 🚀
 
-Automated tool to send "Hello" messages to all applicants on your LinkedIn free job posts.
+A powerful, AI-driven automation suite for managing recruitment across **LinkedIn, Internshala, and Naukri**. 
+Designed for high-performance teams to automate mundane tasks like job posting, reposting, applicant outreach, and job closing.
 
-## ✨ Features
+## 🌟 Key Features
 
-- 🚀 **Fast & Optimized** - Minimal wait times, quick execution
-- 🔐 **Session Persistence** - Saves cookies, no need to login every time
-- 📊 **Tracking** - Remembers who you've already messaged
-- 📝 **Logging** - Full run log with timestamps
-- 🛡️ **Error Handling** - Graceful recovery from failures
+*   **Multi-Platform Support**: Automates LinkedIn, Internshala, and Naukri from a single dashboard.
+*   **Smart Job Management**: 
+    *   **Auto-Post**: Rotates through job titles to find free slots.
+    *   **Auto-Close**: Detects paused/expired jobs and closes them to free up slots.
+    *   **Maintenance Mode**: Keeps your job slots 100% active 24/7.
+*   **AI-Powered Outreach**: Sends personalized messages to applicants automatically.
+*   **Stealth Mode 🥷**: Uses real Chrome profiles and advanced stealth techniques to mimic human behavior and avoid detection.
+*   **Beautiful UI**: A premium, "OLED Glass" dark-mode dashboard for monitoring and control.
+*   **Mobile Ready**: Fully responsive design for managing your hiring from your phone.
 
-## 📋 Quick Start
+## 🛠️ Tech Stack
 
-### 1. Install Dependencies
+*   **Backend**: Python, FastAPI
+*   **Automation**: Playwright (Async), Playwright Stealth
+*   **Frontend**: HTML5, Vanilla CSS (Glassmorphism), JavaScript
+*   **Deployment**: Docker Ready, Supports Oracle Cloud / VPS
+
+## 🚀 Getting Started
+
+### Prerequisites
+
+1.  Python 3.10+
+2.  Google Chrome (for visible mode)
+3.  `pip`
+
+### Installation
+
+1.  **Clone the repo**
+    ```bash
+    git clone https://github.com/yashrmusic/linkedin-help.git
+    cd linkedin-help
+    ```
+
+2.  **Install Dependencies**
+    ```bash
+    pip install -r requirements.txt
+    playwright install chromium
+    ```
+
+3.  **Configure Accounts**
+    Edit `accounts.yaml` with your platform credentials and job preferences.
+    *   *Pro Tip: For LinkedIn, you can specify a `chrome_profile` to use your existing browser session!*
+
+4.  **Run the Server**
+    ```bash
+    python app.py
+    ```
+    Access the dashboard at `http://localhost:8001`
+
+## 🐳 Docker Deployment
+
+To run on a VPS (like Oracle Cloud):
+
 ```bash
-pip install playwright python-dotenv
-playwright install chromium
+docker-compose up --build -d
 ```
 
-### 2. Configure Credentials
-Create a `.env` file:
-```env
-LINKEDIN_EMAIL=your_email@example.com
-LINKEDIN_PASSWORD=your_password
-```
+## 📱 Mobile Access
 
-### 3. Run
-```bash
-python linkedin_messenger.py
-```
+1.  Start the server on your PC.
+2.  Use `localtunnel` or `ngrok` to expose port 8001.
+3.  Open the link on your phone to control the bot remotely!
 
-## 📂 Files
+## ⚠️ Disclaimer
 
-| File | Purpose |
-|------|---------|
-| `linkedin_messenger.py` | **Main script** - run this |
-| `.env` | Your LinkedIn credentials |
-| `cookies.json` | Saved session (auto-generated) |
-| `messaged_applicants.json` | Tracks messaged people |
-| `run_log.txt` | Execution log with timestamps |
-
-## 🔄 Workflow
-
-```
-START
-  │
-  ▼
-┌─────────────────────────────────────┐
-│ 1. LOGIN                            │
-│    - Try saved cookies first        │
-│    - Fall back to credentials       │
-│    - Handle security verification   │
-└─────────────────────────────────────┘
-  │
-  ▼
-┌─────────────────────────────────────┐
-│ 2. NAVIGATE TO JOBS                 │
-│    - Go to posted jobs page         │
-│    - Click on first active job      │
-└─────────────────────────────────────┘
-  │
-  ▼
-┌─────────────────────────────────────┐
-│ 3. VIEW APPLICANTS                  │
-│    - Click "View applicants"        │
-│    - Extract all applicant profiles │
-└─────────────────────────────────────┘
-  │
-  ▼
-┌─────────────────────────────────────┐
-│ 4. MESSAGE EACH APPLICANT           │
-│    For each applicant:              │
-│    - Skip if already messaged       │
-│    - Open profile                   │
-│    - Click "Message"                │
-│    - Type "Hello"                   │
-│    - Click "Send"                   │
-│    - Record as messaged             │
-└─────────────────────────────────────┘
-  │
-  ▼
-┌─────────────────────────────────────┐
-│ 5. SAVE & REPORT                    │
-│    - Save cookies for next run      │
-│    - Print summary statistics       │
-└─────────────────────────────────────┘
-  │
-  ▼
- END
-```
-
-## 📊 Sample Output
-
-```
-[16:30:01] ==================================================
-[16:30:01] 🚀 LINKEDIN APPLICANT MESSENGER
-[16:30:01] ==================================================
-[16:30:01] 📧 Account: jobs@example.com
-[16:30:01] 🎯 Target: https://www.linkedin.com/my-items/posted-jobs/
-[16:30:01] 
-[16:30:02] 🔐 Starting login...
-[16:30:02]    Trying saved session...
-[16:30:04] ✅ Logged in via cookies!
-[16:30:04] 📋 Navigating to: https://www.linkedin.com/my-items/posted-jobs/
-[16:30:07] ✅ Opened job post
-[16:30:07] 👥 Opening applicants...
-[16:30:09] ✅ Viewing applicants
-[16:30:09] 🔍 Finding applicants...
-[16:30:10] 📊 Found 3 applicant profiles, 3 message buttons
-[16:30:10] 📨 Messaging 3 applicants...
-[16:30:10] [1/3] Messaging: john-doe...
-[16:30:14]    ✅ Sent!
-[16:30:14] [2/3] Messaging: jane-smith...
-[16:30:18]    ✅ Sent!
-[16:30:18] [3/3] Messaging: alex-kumar...
-[16:30:22]    ✅ Sent!
-[16:30:22] 
-[16:30:22] ==================================================
-[16:30:22] 📊 SUMMARY REPORT
-[16:30:22] ==================================================
-[16:30:22]    Applicants found:   3
-[16:30:22]    Messages sent:      3
-[16:30:22]    Already messaged:   0
-[16:30:22]    Failed:             0
-[16:30:22] ==================================================
-[16:30:22] ✅ Session saved. Run again to message new applicants.
-```
-
-## ⚠️ Important Notes
-
-1. **Security Verification**: If LinkedIn asks for verification, complete it manually in the browser
-2. **Rate Limiting**: The script includes delays to avoid detection
-3. **Message Content**: Currently sends "Hello" - modify `MESSAGE_TEXT` in the script to change
-4. **Multiple Jobs**: Currently processes the first job - run again after checking all jobs
-
-## 🔧 Customization
-
-Edit `linkedin_messenger.py` to change:
-
-```python
-# Message to send (line ~50)
-MESSAGE_TEXT = "Hello"
-
-# Wait times (lines ~45-48)
-FAST_WAIT = 1000      # Quick operations
-MEDIUM_WAIT = 2000    # Page transitions  
-SLOW_WAIT = 3000      # Heavy page loads
-```
-
-## 🐛 Troubleshooting
-
-| Issue | Solution |
-|-------|----------|
-| "Login failed" | Check credentials in `.env` |
-| "No jobs found" | Ensure you have an active free job post |
-| "No applicants" | Wait for applicants to apply |
-| Security verification | Complete it manually in browser |
-
-## 📜 License
-
-For personal use only. Use responsibly.
+This tool is for educational and internal productivity purposes. Use responsibly and adhere to the terms of service of the respective platforms.

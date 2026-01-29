@@ -1,5 +1,18 @@
 companies:
+  # ==================== LINKEDIN ACCOUNTS ====================
   - name: "Deco Arte"
+    # Interior design focused firm - LinkedIn
+    job_titles:
+      - "Senior Interior Designer"
+      - "Senior Architect"
+      - "Interior Design Lead"
+      - "Principal Interior Designer"
+      - "Design Director"
+      - "Interior Architect"
+      - "Head of Design"
+      - "Creative Director - Interiors"
+    default_location: "Delhi, India"
+    workplace_type: "On-site"
     templates:
       invite_applicants: |
         Thank you for showing interest in joining Deco Arte. We've received your application through LinkedIn and would love to learn more about your background.
@@ -10,11 +23,27 @@ companies:
 
         Warm regards,
         Team Deco Arte
+      close_dead_jobs:
+        auto_close_after_days: 30
+        close_if_zero_applicants: true
     accounts:
       - email: "jobs@deco-arte.in"
         password: "Yr19950903!"
+        platform: "linkedin"
 
   - name: "Urban Mistrii"
+    # Architecture focused firm - LinkedIn
+    job_titles:
+      - "Architectural Intern"
+      - "Junior Architect"
+      - "Senior Architect"
+      - "Architecture Intern"
+      - "Associate Architect"
+      - "Project Architect"
+      - "Design Architect"
+      - "Architectural Designer"
+    default_location: "Delhi, India"
+    workplace_type: "On-site"
     templates:
       invite_applicants: |
         Thank you for showing interest in joining Urban Mistrii. We've received your application through LinkedIn and would love to learn more about your background.
@@ -28,10 +57,25 @@ companies:
     accounts:
       - email: "mail@urbanmistrii.com"
         password: "Lolokok1"
+        platform: "linkedin"
       - email: "yashr.otp@gmail.com"
         password: "Lolokok1"
+        platform: "linkedin"
+        chrome_profile: "Profile 7"
 
   - name: "Melange Studio"
+    # Architecture focused firm - LinkedIn
+    job_titles:
+      - "Architectural Intern"
+      - "Junior Architect"
+      - "Senior Architect"
+      - "Architecture Intern"
+      - "Associate Architect"
+      - "Project Architect"
+      - "Design Architect"
+      - "Architectural Designer"
+    default_location: "Delhi, India"
+    workplace_type: "On-site"
     templates:
       invite_applicants: |
         Thank you for showing interest in joining Melange Studio. We've received your application through LinkedIn and would love to learn more about your background.
@@ -45,3 +89,63 @@ companies:
     accounts:
       - email: "dhruv5795@gmail.com"
         password: "dvgaddu1995"
+        platform: "linkedin"
+        chrome_profile: "Profile 1"
+
+  # ==================== INTERNSHALA ACCOUNTS ====================
+  - name: "Deco Arte (Internshala)"
+    job_titles:
+      - "Interior Design Intern"
+      - "Architecture Intern"
+      - "3D Visualization Intern"
+    default_location: "Delhi"
+    workplace_type: "On-site"
+    templates:
+      invite_applicants: ""
+    accounts:
+      - email: "jobs@deco-arte.in"
+        password: "Yr19950903!"
+        platform: "internshala"
+
+  - name: "Urban Mistrii (Internshala)"
+    job_titles:
+      - "Architecture Intern"
+      - "Design Intern"
+      - "AutoCAD Intern"
+    default_location: "Delhi"
+    workplace_type: "On-site"
+    templates:
+      invite_applicants: ""
+    accounts:
+      - email: "mail@urbanmistrii.com"
+        password: "Lolokok1"
+        platform: "internshala"
+
+  # ==================== NAUKRI ACCOUNTS ====================
+  - name: "Deco Arte (Naukri)"
+    job_titles:
+      - "Senior Interior Designer"
+      - "Interior Designer"
+      - "Architect"
+    default_location: "Delhi"
+    workplace_type: "On-site"
+    templates:
+      invite_applicants: ""
+    accounts:
+      - email: "jobs@deco-arte.in"
+        password: "Yr19950903!"
+        platform: "naukri"
+
+  - name: "Urban Mistrii (Naukri)"
+    job_titles:
+      - "Architect"
+      - "Senior Architect"
+      - "Junior Architect"
+    default_location: "Delhi"
+    workplace_type: "On-site"
+    templates:
+      invite_applicants: ""
+    accounts:
+      - email: "mail@urbanmistrii.com"
+        password: "Lolokok1"
+        platform: "naukri"

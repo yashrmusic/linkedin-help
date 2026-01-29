@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Offer Letter - Digital Signature</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎉 Offer Letter Acceptance</h1>
+            <p class="subtitle">Please review your offer letter and provide your digital signature below</p>
+        </div>
+
+        <div class="card offer-preview">
+            <h2>📄 Your Offer Letter</h2>
+            <div id="offerPreview" class="offer-content">
+                <p class="loading">Loading offer letter...</p>
+            </div>
+            <button id="viewFullPdf" class="btn btn-secondary">
+                <span class="icon">📑</span> View Full PDF
+            </button>
+        </div>
+
+        <div class="card signature-section">
+            <h2>✍️ Your Signature</h2>
+            <p class="instruction">Draw your signature in the box below:</p>
+
+            <div class="signature-pad-container">
+                <canvas id="signaturePad" width="600" height="200"></canvas>
+            </div>
+
+            <div class="signature-controls">
+                <button id="clearSignature" class="btn btn-outline">
+                    <span class="icon">🗑️</span> Clear
+                </button>
+                <button id="undoSignature" class="btn btn-outline">
+                    <span class="icon">↶</span> Undo
+                </button>
+            </div>
+
+            <div class="acceptance-checkbox">
+                <label>
+                    <input type="checkbox" id="agreeTerms">
+                    <span>I accept the terms and conditions outlined in this offer letter</span>
+                </label>
+            </div>
+
+            <div class="form-group">
+                <label for="signatureDate">Date:</label>
+                <input type="date" id="signatureDate" required>
+            </div>
+
+            <button id="submitSignature" class="btn btn-primary" disabled>
+                <span class="icon">✓</span> Submit Signature & Accept Offer
+            </button>
+
+            <div id="statusMessage" class="status-message"></div>
+        </div>
+
+        <div class="card info-section">
+            <h3>ℹ️ Next Steps</h3>
+            <ol>
+                <li>Review your offer letter carefully</li>
+                <li>Draw your signature in the provided box</li>
+                <li>Check the acceptance checkbox</li>
+                <li>Select today's date</li>
+                <li>Click "Submit" to finalize your acceptance</li>
+            </ol>
+            <p class="note">💡 A signed copy will be emailed to you immediately after submission.</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/signature_pad@4.0.0/dist/signature_pad.umd.min.js"></script>
+    <script src="app.js"></script>
+</body>
+
+</html>
