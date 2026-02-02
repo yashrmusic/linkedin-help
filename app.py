@@ -38,7 +38,7 @@ STATIC_DIR.mkdir(exist_ok=True)
 
 if OFFER_AVAILABLE and GEMINI_API_KEY:
     genai.configure(api_key=GEMINI_API_KEY)
-    gemini_model = genai.GenerativeModel('models/gemini-2.0-flash')
+    gemini_model = genai.GenerativeModel('models/gemini-1.5-flash')
 else:
     gemini_model = None
 
